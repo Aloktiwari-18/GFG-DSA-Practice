@@ -12,7 +12,7 @@ class Solution {
         }
         
         
-        for(int val:set){
+        for(int val:arr){
             if(set.contains(val) && !set.contains(val-1)){
                 int curr=val;
                 count=0;
