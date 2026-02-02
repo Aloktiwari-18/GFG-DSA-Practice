@@ -18,7 +18,7 @@ class Solution {
                 count=0;
                 
                 while(set.contains(curr)){
-                    set.remove(curr);
+                    // set.remove(curr);
                     curr++;
                     count++;
                 }
