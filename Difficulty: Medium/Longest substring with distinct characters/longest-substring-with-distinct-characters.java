@@ -1,20 +1,29 @@
 class Solution {
     public int longestUniqueSubstr(String s) {
-       int n=s.length();
-       int res=0;
-       for(int i=0;i<n;i++){
-           boolean vis[]= new boolean[26];
-           for(int j=i;j<n;j++){
-               if(vis[s.charAt(j)-'a']==true){
-                   break;
-               }
-               else{
-                   res=Math.max(res,j-i+1);
-                   vis[s.charAt(j)-'a']=true;
-               }
-           }
-       }
-       return res;
+        // code here
+        HashSet<Character> set= new HashSet<>();
         
+        int i=0;int j=0;int max=1;
+        while(j<s.length()){
+            char ch= s.charAt(j);
+            if(!set.contains(ch)){
+                set.add(ch);
+                j++;
+                
+            }else{
+                int len=j-i;
+                max=Math.max(max,len);
+                while(s.charAt(i)!=s.charAt(j)){
+                    set.remove(s.charAt(i));
+                    i++;
+                }
+                i++;
+                j++;
+            }
+        }
+        
+        int len=j-i;
+        max=Math.max(max, len);
+        return max;
     }
 }
