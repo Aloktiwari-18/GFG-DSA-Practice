@@ -1,48 +1,39 @@
 class Solution {
-    public ArrayList<Integer> topoSort(int V, int[][] edges) {
-        Queue<Integer> q= new LinkedList<>();
-        ArrayList<Integer> ans= new ArrayList<>();
-        int [] indegree= new int[V];
+    public static void dfs(int node , int [] vis, ArrayList<ArrayList<Integer>> adj, Stack<Integer> st){
         
-        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
-        for(int i=0;i<V;i++){
-            adj.add(new ArrayList<>());
-        }
-        
-        for(int [] e:edges){
-            adj.get(e[0]).add(e[1]);
-        }
-        
-        
-        for(int i=0;i<V;i++){
-            for(int next:adj.get(i)){
-                indegree[next]++;
-            }
-        }
-        for(int i=0;i<V;i++){
-            if(indegree[i]==0){
-                q.add(i);
-            }
-        }
-        
-        while(!q.isEmpty()){
-            int top= q.poll();
-            ans.add(top);
-            
-            for(int next:adj.get(top)){
-                indegree[next]--;
-                if(indegree[next]==0){
-                    q.add(next);
-                }
+        vis[node]=1;
+        for(int it: adj.get(node)){
+            if(vis[it]==0){
+                dfs(it, vis, adj, st);
                 
             }
             
+        }
+        st.push(node);
+    }
+    public ArrayList<Integer> topoSort(int V, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
             
         }
+        for(int [] edge: edges){
+            adj.get(edge[0]).add(edge[1]);
+        }
+
+        // code here
+        int vis[]= new int [V];
+        Stack<Integer> st= new Stack<>();
+        
+        for(int i=0;i<V;i++){
+            if(vis[i]==0){
+                dfs(i, vis, adj, st);
+            }
+        }
+        ArrayList<Integer> ans= new ArrayList<>();
+        while(!st.isEmpty()){
+            ans.add(st.pop());
+        }
         return ans;
-        
-        
-        
-        
     }
 }
