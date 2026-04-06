@@ -1,7 +1,8 @@
 // User function Template for Java
 class Solution {
-    public static int pathSum(int i, int j, int mat[][], int [][] dp){
+    public static int dfs(int i, int j, int[][]mat,  int dp[][]){
         int n= mat.length;
+        
         if(j<0 || j>=mat[0].length){
             return Integer.MIN_VALUE;
         }
@@ -9,30 +10,30 @@ class Solution {
             return dp[i][j];
         }
         if(i==n-1) return mat[i][j];
-        int pathDown= pathSum(i+1,j,mat, dp);
-        int pathLeft= pathSum(i+1, j-1, mat, dp);
         
-        int pathRight= pathSum(i+1,j+1, mat, dp);
+       int diagLeft= dfs(i+1, j-1, mat, dp);
+       int down= dfs(i+1, j, mat,dp);
         
-       return dp[i][j] = mat[i][j]+Math.max(pathDown, Math.max(pathLeft, pathRight));
-        
-        
+       int diagRight=  dfs(i+1, j+1, mat,  dp);
+       
+       return dp[i][j]= mat[i][j]+Math.max(diagLeft, Math.max(down, diagRight));
         
     }
     public int maximumPath(int[][] mat) {
-        int n= mat.length;
-        int m= mat[0].length;
         // code here
-        int [][]dp =new int[n][m];
+        int n=mat.length;
+        int m= mat[0].length;
         
+        int dp[][]= new int[n][m];
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 dp[i][j]=-1;
             }
         }
         int ans=Integer.MIN_VALUE;
+        
         for(int j=0;j<m;j++){
-            ans =Math.max(ans,pathSum(0, j, mat, dp));
+            ans=Math.max(ans, dfs(0,j,mat,dp));
         }
         return ans;
     }
