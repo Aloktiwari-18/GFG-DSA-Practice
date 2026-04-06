@@ -1,28 +1,35 @@
 class Solution {
-    public static int maxSum(int i, int [] arr, int [] dp){
+    static int max;
+    public static int dfs(int i, int []arr, int []dp){
+        int n= arr.length;
+        
         if(dp[i]!=-1){
             return dp[i];
         }
         int sum=arr[i];
-        for(int j=0;j<i;j++){
+        for(int prev=0;prev<i;prev++){
+        
+            if(arr[prev]<arr[i]){
+                sum=Math.max(sum, arr[i]+dfs(prev, arr, dp));
+            }
             
-             if(arr[j]<arr[i]){
-                sum=Math.max(sum, arr[i]+maxSum(j, arr,dp));
-             }
         }
         return dp[i]=sum;
+        
+
     }
     public int maxSumIS(int arr[]) {
+        // code here
+        max=0;
         int n= arr.length;
-        int dp[]=new int [n];
-        
+        int dp[]= new int [n];
         for(int i=0;i<n;i++){
-            dp[i]= -1;
+            dp[i]=-1;
         }
-        int max_ans=0;
         for(int i=0;i<n;i++){
-            max_ans= Math.max(max_ans,maxSum(i, arr, dp));
+            max= Math.max(max, dfs(i, arr, dp));
+            
         }
-        return max_ans;
+        return max;
     }
 }
