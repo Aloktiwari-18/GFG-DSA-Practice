@@ -1,19 +1,18 @@
 class Solution {
     public static ArrayList<Integer> findUnion(int[] a, int[] b) {
-        // code< here
-        HashSet<Integer> a1= new HashSet<>();
-        ArrayList<Integer> ans= new ArrayList<>();
-        for(int ele1:a){
-            a1.add(ele1);
-        }
-        for(int ele2:b){
-            a1.add(ele2);
+        // code here
+        HashSet<Integer> h= new HashSet<>();
+        ArrayList<Integer> arr= new ArrayList<>();
+        for(int ele:a){
+            h.add(ele);
             
         }
-        for(int num:a1){
-            ans.add(num);
+        for(int ele:b){
+            h.add(ele);
         }
-        return ans;
-        
+        for(int ele: h){
+            arr.add(ele);
+        }
+        return arr;
     }
 }
