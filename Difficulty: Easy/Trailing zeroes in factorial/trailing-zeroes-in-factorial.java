@@ -1,0 +1,15 @@
+class Solution {
+    static int trailingZeroes(int n) {
+        // code here
+                if(n<5) return 0;
+        int sum=0;
+        
+        while(n>=5){
+            sum+=n/5;
+            n=n/5;
+
+        }
+        return sum;
+
+    }
+}
