@@ -1,29 +1,28 @@
 class Solution {
     public void sort012(int[] arr) {
         // code here
-        int s=0;
-        int m=0;
-        int e= arr.length-1;
-        while(m<=e){
-            if(arr[m]==0){
-                swap(arr, s, m);
-                s++;
-                m++;
+        int low=0;
+        int mid=0;
+        int high=arr.length-1;
+        while(mid<=high){
+            if(arr[mid]==0){
+                int temp= arr[low];
+                arr[low]= arr[mid];
+                arr[mid]=temp;
+                low++;
+                mid++;
             }
-            else if(arr[m]==1){
-                m++;
-            }else{
-                swap(arr,m, e);
-                    e--;
-                    
-                
+            else if(arr[mid]==1){
+                mid++;
             }
+            else{
+                int temp= arr[mid];
+                arr[mid]=arr[high];
+                arr[high]=temp;
+                high--;
+            }
+ 
         }
-    }
-        public static void swap(int arr[], int s, int y){
-            int temp= arr[s];
-            arr[s]=arr[y];
-            arr[y]=temp;
         
     }
 }
