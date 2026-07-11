@@ -1,28 +1,27 @@
 class Solution {
     public ArrayList<Integer> nextLargerElement(int[] arr) {
-        int n= arr.length;
         // code here
-        int nge[]= new int[n];
-        nge[n-1]=-1;
+        int n= arr.length;
+        ArrayList<Integer> res=new ArrayList<>();
+        
         Stack<Integer> st= new Stack<>();
-        st.push(arr[n-1]);
-        for(int i=n-2;i>=0;i--){
-            while(st.size()>0 && arr[i]>=st.peek()) {
+        for(int i=0;i<n;i++){
+            res.add(0);
+        }
+        for(int i=n-1;i>=0 ;i--){
+            while(st.size()!=0 && st.peek()<=arr[i]){
                 st.pop();
-                
             }
-            if(st.size()==0) nge[i]=-1;
-            else{
-                nge[i]= st.peek();
+            if(st.size()==0){
+                res.set(i,-1);
+                
+            }else{
+                res.set(i,st.peek());
             }
             st.push(arr[i]);
+           
             
         }
-        ArrayList<Integer> ans= new ArrayList<>();
-        for(int i=0;i<n;i++){
-            ans.add(nge[i]);
-        }
-        return ans;
-        
+        return res;
     }
 }
