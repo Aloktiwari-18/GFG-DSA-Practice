@@ -13,63 +13,66 @@ class Node {
 */
 
 class Solution {
-    class Pair{
-        Node node;
-        int dist;
-        Pair(Node node , int dist){
-            this.node = node;
-            this.dist= dist;
+    public void markedParent(Node root, HashMap<Node, Node> mp){
+        Queue<Node> q= new LinkedList<>();
+        q.add(root);
+        while(q.size()>0){
+            int s= q.size();
+            for(int i=0;i<s;i++){
+                Node curr= q.poll();
+                if(curr.left!=null){
+                    q.add(curr.left);
+                    mp.put(curr.left, curr);
+                }
+                if(curr.right!=null){
+                    q.add(curr.right);
+                    mp.put(curr.right, curr);
+                }
+            }
         }
     }
-    
-    static Node start;
-    
-    static HashMap<Node, Node> parent;
-    
-    private static void dfs(Node root, int target){
-        if(root==null) return ;
-        if(root.data==target) start= root;
-        if(root.left!=null) parent.put(root.left, root);
-        if(root.right!=null) parent.put(root.right, root);
-        
-        dfs(root.left, target);
-        dfs(root.right, target);
+     Node find(Node root, int target){
+         if(root==null) return null;
+        if(root.data==target){
+            return root;
+        }
+        Node left= find(root.left, target);
+        if(left!=null){
+            return left;
+        }
+        return find(root.right, target);
     }
+    
     public int minTime(Node root, int target) {
-       start=null;
-       parent= new HashMap<>();
-       dfs(root, target);
-       Queue<Pair> q= new LinkedList<>();
-       q.add(new Pair(start, 0));
-       
-       
-       HashSet<Node> burned = new HashSet<>();
-       burned.add(start);
-       int time=0;
-       while(!q.isEmpty()){
-           Pair front= q.remove();
-           int dist= front.dist;
-           Node node= front.node;
-           
-           time= Math.max(time, dist);
-           
-           if(node.left!=null && !burned.contains(node.left)){
-               q.add(new Pair(node.left, dist+1));
-               burned.add(node.left);
-           }
-           
-            if(node.right!=null && !burned.contains(node.right)){
-               q.add(new Pair(node.right, dist+1));
-               burned.add(node.right);
-           }
-           
-           if(parent.containsKey(node) && !burned.contains(parent.get(node))){
-               q.add(new Pair(parent.get(node),dist+1));
-               burned.add(parent.get(node));
-           }
-       }
-       return time;
-       
-       
+        // code here
+        Queue<Node> q= new LinkedList<>();
+        HashMap<Node, Node> mp= new HashMap<>();
+        markedParent(root, mp);
+        Node targetNode = find(root, target);
+        q.add(targetNode);
+        HashMap<Node, Boolean> vis= new HashMap<>();
+        vis.put(targetNode, true);
+        int time=0;
+        while(q.size()>0){
+            int size=q.size();
+            time++;
+            for(int i=0;i<size;i++){
+                Node curr= q.poll();
+                if(curr.left!=null && vis.get(curr.left)==null){
+                    q.add(curr.left);
+                    vis.put(curr.left, true);
+                }
+                if(curr.right!=null && vis.get(curr.right)==null){
+                    q.add(curr.right);
+                    vis.put(curr.right, true);
+                }
+                if(mp.get(curr)!=null && vis.get(mp.get(curr))==null){
+                    q.add(mp.get(curr));
+                    vis.put(mp.get(curr), true);
+                }
+            }
+        }
+        return time-1;
+        
     }
-}
+} 
