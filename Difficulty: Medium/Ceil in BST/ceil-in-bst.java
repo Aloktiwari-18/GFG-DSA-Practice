@@ -1,30 +1,36 @@
-/* class Node {
+/*
+Definition for Node
+class Node {
     int data;
     Node left, right;
 
-    Node(int data) {
-        this.data = data;
+    Node(int val) {
+        this.data = val;
         left = right = null;
     }
 } */
 
 class Solution {
     int ceil=-1;
-    int findCeil(Node root, int x) {
-        if(root==null) return 0;
-        
-        // code here
-        if(root.data==x) {
+    public int helper(Node root, int x){
+        if(root==null)return 0;
+        if(root.data==x){
             ceil= root.data;
             return ceil;
         }
         if(root.data>x){
-            ceil= root.data;
-            findCeil(root.left,x) ;
+            ceil=root.data;
+            helper(root.left, x);
         }
         if(root.data<x){
-            findCeil(root.right,x) ;
+          helper(root.right, x);
         }
         return ceil;
+        
+    }
+    int findCeil(Node root, int x) {
+        // code here
+   return  helper(root, x);
+    
     }
 }
