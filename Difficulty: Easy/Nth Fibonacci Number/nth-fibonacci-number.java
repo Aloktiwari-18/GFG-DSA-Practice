@@ -1,15 +1,12 @@
 class Solution {
-    static int [] dp;
-    public int fibo(int n){
-        if(n<=1) return n;
-        if(dp[n]!=0) return dp[n];
-        int ans= fibo(n-1)+fibo(n-2);
-        return ans;
-        
+    static int fib(int n){
+        if(n<=1){
+            return n;
+        }
+        return fib(n-1)+fib(n-2);
     }
-    public int nthFibonacci(int n) {
+    static int nthFibonacci(int n) {
         // code here
-        dp=new int [n+1];
-        return fibo(n);
+        return fib(n);
     }
 }
