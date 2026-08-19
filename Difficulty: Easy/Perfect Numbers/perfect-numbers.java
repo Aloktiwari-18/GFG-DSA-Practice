@@ -8,7 +8,10 @@ class Solution {
                 sum+=n/i;
             }
         }
-        if(sum==n) return true;
+        if(sum==n){
+            return true;
+        }
         return false;
+        
     }
 };
