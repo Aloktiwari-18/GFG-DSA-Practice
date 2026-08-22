@@ -1,59 +1,58 @@
-import java.util.*;
-
 class Solution {
-    
-    public void solve(int[][] m, int row, int col, int n,
-                      ArrayList<String> res, int[][] visited, String path) {
-        
-        // Destination reached
-        if(row == n-1 && col == n-1) {
-            res.add(path);
-            return;
+    public void solve(int[][] maze, int row, int col, ArrayList<String> ans, int[][] vis, StringBuilder path){
+        if(row == maze.length - 1 && col == maze[0].length - 1){
+            ans.add(path.toString());
+          return;
         }
-        
-        visited[row][col] = 1;
-        
+        vis[row][col]= 1;
         // Down
-        if(row+1 < n && visited[row+1][col] == 0 && m[row+1][col] == 1) {
-            solve(m, row+1, col, n, res, visited, path + "D");
-        }
-        
-        // Left
-        if(col-1 >= 0 && visited[row][col-1] == 0 && m[row][col-1] == 1) {
-            solve(m, row, col-1, n, res, visited, path + "L");
+        if(row+1<maze.length && vis[row+1][col]==0 && maze[row+1][col]==1){
+            path.append("D");
+            solve(maze, row+1, col, ans, vis, path);
+            path.deleteCharAt(path.length() - 1);
         }
         
         // Right
-        if(col+1 < n && visited[row][col+1] == 0 && m[row][col+1] == 1) {
-            solve(m, row, col+1, n, res, visited, path + "R");
+        if(col+1<maze[0].length && vis[row][col+1]==0  && maze[row][col+1]==1){
+            path.append("R");
+            solve(maze, row, col+1, ans, vis, path);
+            path.deleteCharAt(path.length() - 1);
         }
-        
-        // Up
-        if(row-1 >= 0 && visited[row-1][col] == 0 && m[row-1][col] == 1) {
-            solve(m, row-1, col, n, res, visited, path + "U");
+        // Left
+        if(col-1 >=0 && vis[row][col-1]==0  && maze[row][col-1]==1){
+            path.append("L");
+            solve(maze, row, col-1, ans, vis, path);
+            path.deleteCharAt(path.length() - 1);
         }
+        // up
+        if(row-1>=0 && vis[row-1][col]==0  && maze[row-1][col]==1){
+            path.append("U");
+            solve(maze, row-1, col, ans, vis, path);
+            path.deleteCharAt(path.length() - 1);
+        }
+        vis[row][col]=0;
         
-        // Backtrack
-        visited[row][col] = 0;
-    }
-    
-    
+    }  
+        
     public ArrayList<String> ratInMaze(int[][] maze) {
-        
-        int n = maze.length;
-        ArrayList<String> res = new ArrayList<>();
-        
-        // Edge case
-        if(maze[0][0] == 0 || maze[n-1][n-1] == 0) {
-            return res;
+        // code here
+        int n= maze.length;
+        int m= maze[0].length;
+         ArrayList<String> ans=new ArrayList<>();
+        if(maze[n-1][m-1]==0 || maze[0][0]==0){
+            return ans;
         }
         
-        int[][] visited = new int[n][n];
+       
+        StringBuilder sb= new StringBuilder();
+        int vis[][]=new int[n][m];
+      
         
-        solve(maze, 0, 0, n, res, visited, "");
         
-        Collections.sort(res); // important
+        solve(maze, 0, 0,  ans, vis, sb);
+        Collections.sort(ans);
+        return ans;
         
-        return res;
+        
     }
 }
