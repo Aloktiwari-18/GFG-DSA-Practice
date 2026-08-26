@@ -1,27 +1,14 @@
-// User function Template for Java
-
 class Solution {
     String removeDuplicates(String s) {
         
+        HashSet<Character> set= new HashSet<>();
         StringBuilder sb= new StringBuilder ();
-        
-        int n= s.length();
-        boolean vis[]= new boolean[128];
-        for(int i=0;i<n;i++){
-            char ch= s.charAt(i);
-            
-            if(vis[ch]==false){
-                vis[ch]= true;
+        for(char ch:s.toCharArray()){
+            if(!set.contains(ch)){
                 sb.append(ch);
             }
-            if(vis[ch]==true){
-                continue;
-            }
+            set.add(ch);
         }
         return sb.toString();
-        
-        
-        
-        
     }
 }
